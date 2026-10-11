@@ -74,6 +74,28 @@ Unlike standard mock APIs, MockMyAPI is built for chaos engineering:
 - npm or yarn
 - Git
 
+### Quick Start
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/yourusername/mockmyapi.git
+cd mockmyapi
+
+# 2. Backend setup
+cd backend
+npm install
+cp .env.sample .env
+# Edit .env with your MongoDB connection string
+npm run dev
+
+# 3. Frontend setup (in a new terminal)
+cd ../frontend
+npm install
+npm run dev
+
+# 4. Open http://localhost:5173
+```
+
 ### Clone Repository
 
 ```bash
@@ -90,17 +112,30 @@ cd backend
 # Install dependencies
 npm install
 
-# Create .env file
-cat > .env << EOF
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/mockmyapi
-CORS_ORIGIN=http://localhost:5173
-NODE_ENV=development
-EOF
+# Create .env file from sample
+cp .env.sample .env
+
+# Edit .env file with your actual credentials
+# - Update MONGODB_URI if using MongoDB Atlas
+# - Change PORT if 5000 is already in use
+# - Update CORS_ORIGIN if frontend runs on different port
 
 # Start backend server
 npm run dev
 ```
+
+**Environment Variables Explained:**
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `PORT` | Backend server port | `5000` |
+| `MONGODB_URI` | MongoDB connection string | `mongodb://localhost:27017/mockmyapi` |
+| `CORS_ORIGIN` | Frontend URL for CORS | `http://localhost:5173` |
+| `NODE_ENV` | Environment mode | `development` or `production` |
+
+**MongoDB Options:**
+- **Local**: `mongodb://localhost:27017/mockmyapi`
+- **Atlas**: `mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/mockmyapi`
 
 ### Frontend Setup
 
