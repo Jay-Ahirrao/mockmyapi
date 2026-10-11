@@ -112,11 +112,21 @@ export default function EndpointForm({
               value={formData.responseBody}
               onChange={(e) => handleResponseBodyChange(e.target.value)}
               placeholder='{"success": true}'
-              className={`w-full h-32 px-4 py-3 bg-neutral-800 border rounded-lg font-mono text-sm resize-none focus:outline-none transition-all ${
+              rows={4}
+              className={`w-full min-h-[128px] max-h-[70vh] px-4 py-3 bg-neutral-800 border rounded-lg font-mono text-sm resize-y focus:outline-none transition-all overflow-y-auto ${
                 jsonError
                   ? 'border-red-500/50 focus:border-red-500/70'
                   : 'border-white/10 focus:border-emerald-500/50'
               }`}
+              style={{
+                height: 'auto',
+                minHeight: '128px',
+                maxHeight: '70vh'
+              }}
+              onInput={(e) => {
+                e.target.style.height = 'auto';
+                e.target.style.height = Math.min(e.target.scrollHeight, window.innerHeight * 0.7) + 'px';
+              }}
             />
             {jsonError && (
               <div className="absolute top-2 right-2 flex items-center gap-2">

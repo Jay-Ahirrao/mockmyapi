@@ -36,8 +36,8 @@ export default function App() {
     fetchEndpoints();
   }, []);
 
-  const showToast = (message, type = 'success') => {
-    setToast({ message, type });
+  const showToast = (message, type = 'success', action = null) => {
+    setToast({ message, type, action });
   };
 
   const handleCreateEndpoint = async (formData) => {
@@ -61,7 +61,14 @@ export default function App() {
 
       if (res.ok) {
         await fetchEndpoints();
-        showToast('Mock endpoint created successfully!', 'success');
+        showToast(
+          'Endpoint created successfully!',
+          'success',
+          {
+            label: 'View Endpoints',
+            onClick: () => setCurrentView('endpoints')
+          }
+        );
       }
     } catch (err) {
       console.error('Error creating endpoint:', err);
@@ -129,12 +136,6 @@ export default function App() {
             <BuilderView
               loading={loading}
               onSubmit={handleCreateEndpoint}
-              endpoints={endpoints}
-              onDelete={handleDeleteEndpoint}
-              onTest={handleTestEndpoint}
-              testResults={testResults}
-              testingId={testingId}
-              onCopySuccess={handleCopySuccess}
             />
           );
         case 'endpoints':
@@ -176,6 +177,7 @@ export default function App() {
         <Toast
           message={toast.message}
           type={toast.type}
+          action={toast.action}
           onClose={() => setToast(null)}
         />
       )}
